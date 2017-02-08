@@ -242,7 +242,7 @@ function handle_flows(flow_data){
 
         flow_stats = flows[flow_idx].value.data.OFPFlowStats;
         table_id = flow_stats.table_id;
-        if(!(table_id in flow_info)){
+        if(!(switch_id+table_id in flow_info)){
             flow_info[switch_id+table_id] = [];
             flow_info[switch_id+table_id].push(get_flow_info(flow_stats));
         }
