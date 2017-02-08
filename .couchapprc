@@ -1,0 +1,5 @@
+{
+ "env":{
+        "default":{"db":"http://root:admin@localhost:5984/flowinfodb"}
+ }
+}
