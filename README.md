@@ -7,6 +7,7 @@ Couchapp for viewing flow table info in couchdb
 * `git clone https://github.com/harshad91/flowinfo.git`
 * `virtualenv venv`
   * `virtualenv` can be installed using `sudo pip install virtualenv`
+* `source venv/bin/activate`
 * `pip install couchapp`
   * Installs all the `counchapp` dependencies
 * `cd flowinfo`
