@@ -3,11 +3,12 @@ var w = $(window).width() - 10,
     x = d3.scale.linear().range([0, w]),
     y = d3.scale.linear().range([0, h]);
 
-var vis = d3.select("#body").append("div")
+var vis = d3.select("#body").append("xhtml:div")
     .attr("class", "chart")
     .style("width", w + "px")
     .style("height", h + "px")
   .append("svg:svg")
+    .attr('xmlns','http://www.w3.org/2000/svg')
     .attr("width", w)
     .attr("height", h);
 
@@ -62,7 +63,7 @@ function render_tree(root){
             return d.children ? (d.istable ?  "table" : "parent") : "child";
         })
       .attr("id", function(d){
-            return d.id;
+        if(d.id) return d.id;
       })
       .attr("fill", function(d){return "steelblue"; });
 
@@ -72,8 +73,11 @@ function render_tree(root){
       .attr("id", function(d){return d.isflow ? "flow"+d.table_id: "id"; })
       .attr("class", function(d){return d.isflow ? "flows" : "";})
       .style("width", "200px")
+      .attr("height", "100%")
+      .attr("width", "100%")
       .style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; })
-      .html(function(d) { return d.name; })
+        .append("xhtml:div")        
+        .text(function(d) { return d.name; })
 
     d3.select(window)
       .on("click", function() { click(root); })
@@ -128,7 +132,7 @@ function render_tree(root){
                 tbl.appendChild(row);
             }
             var table = $('#table_id').DataTable({
-                    'iDisplayLength': 25
+                    'iDisplayLength': 10
             });
         }
 
