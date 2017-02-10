@@ -155,7 +155,7 @@ function map_flows_and_switches(flows, switch_id){
 function fetch_data(handle_data){
     $.ajax({
         type: "GET",
-        url: "http://127.0.0.1:5984/switches_bak/_design/switches/_view/switch",
+        url: "http://"+couchdb_ip_address+":"+couchdb_port_number+"/switches_bak/_design/switches/_view/switch",
         dataType: 'json',
         success: function (resp_data) {
             handle_data(resp_data);
@@ -174,7 +174,7 @@ fetch_data(function handle_data(data){
         console.log('[\"' + switch_flows.join('\",\"') + '\"]');
         $.ajax({
             type: "GET",
-            url: "http://127.0.0.1:5984/flows_bak/_design/flows/_view/flow",
+            url: "http://"+couchdb_ip_address+":"+couchdb_port_number+"/flows_bak/_design/flows/_view/flow",
             data: {"keys": '[\"' + switch_flows.join('\",\"') + '\"]'},
             dataType: 'json',
             success: function (resp_data) {
@@ -232,7 +232,6 @@ function get_flow_info(flow){
 
 
 function handle_flows(flow_data){
-    console.log(switch_id);
     flows = flow_data.rows;
     table_sub_tree = []
     map_table_id_idx = {}
