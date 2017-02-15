@@ -112,6 +112,7 @@ function render_tree(root){
         if(d.istable){
             $("foreignObject.flows").text("");   
             table_init([
+                'Duration_sec',
                 'Eth_src',
                 'Eth_dst',
                 'IP_src',
@@ -225,6 +226,7 @@ function parse_match(match){
 function get_flow_info(flow){
     match = parse_match(flow.match.OFPMatch);
     return [
+        flow.duration_sec,
         match.esrc,
         match.edst,
         match.ipsrc,
