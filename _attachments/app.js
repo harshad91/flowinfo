@@ -26,7 +26,10 @@ function table_init(headings, id){
     var row = document.createElement("tr");
     for(idx in headings){
         var cell = document.createElement("td");
-        var cell_text = document.createTextNode(headings[idx]);
+        var cell_text = document.createTextNode(headings[idx]['name']);
+        if ('tooltip' in headings[idx]){
+            cell.setAttribute("title", headings[idx]['tooltip']);
+        }
         cell.appendChild(cell_text);
         row.appendChild(cell);
     }
@@ -57,8 +60,12 @@ function render_tree(root){
       ky = h / 1;
 
     g.append("svg:rect")
-      .attr("width", root.dy * kx)
-      .attr("height", function(d) { return d.dx * ky; })
+      .attr("width", function(d) {
+        return root.dy * kx;
+        })
+      .attr("height", function(d) { 
+        return d.dx * ky; 
+        })
       .attr("class", function(d) {
             return d.children ? (d.istable ?  "table" : "parent") : "child";
         })
@@ -72,7 +79,6 @@ function render_tree(root){
       .attr("dy", ".35em")
       .attr("id", function(d){return d.isflow ? "flow"+d.table_id: "id"; })
       .attr("class", function(d){return d.isflow ? "flows" : "";})
-      .style("width", "200px")
       .attr("height", "100%")
       .attr("width", "100%")
       .style("opacity", function(d) { return d.dx * ky > 12 ? 1 : 0; })
@@ -112,13 +118,13 @@ function render_tree(root){
         if(d.istable){
             $("foreignObject.flows").text("");   
             table_init([
-                'Duration_sec',
-                'Eth_src',
-                'Eth_dst',
-                'IP_src',
-                'IP_dst',
-                'IN_port',
-                'Priority'
+                {'name': 'Duration_sec', 'tooltip': 'indicates how long ago a flow was inserted or refreshed'},
+                {'name': 'Eth_src'},
+                {'name': 'Eth_dst'},
+                {'name': 'IP_src'},
+                {'name': 'IP_dst'},
+                {'name': 'IN_port'},
+                {'name': 'Priority'}
             ], d.id);
             var tbl = document.getElementById('table_body');
             table_flows = flow_info[d.id];
@@ -147,7 +153,7 @@ function render_tree(root){
     }
 }
 
-tree = {'name': 'Flows', 'children':[]}
+tree = {'name': 'Flows', 'children':[], 'isRoot': true}
 table_key_value = {"0": "VLAN", "1": "ACL"}
 flow_switch_map = {}
 
