@@ -160,7 +160,7 @@ function map_flows_and_switches(flows, switch_id){
 function fetch_data(handle_data){
     $.ajax({
         type: "GET",
-        url: "http://"+couchdb_ip_address+":"+couchdb_port_number+"/switches_bak/_design/switches/_view/switch",
+        url: window.location.protocol+"//"+window.location.host+"/switches_bak/_design/switches/_view/switch",
         dataType: 'json',
         success: function (resp_data) {
             handle_data(resp_data);
@@ -179,7 +179,7 @@ fetch_data(function handle_data(data){
         console.log('[\"' + switch_flows.join('\",\"') + '\"]');
         $.ajax({
             type: "GET",
-            url: "http://"+couchdb_ip_address+":"+couchdb_port_number+"/flows_bak/_design/flows/_view/flow",
+            url: window.location.protocol+"//"+window.location.host+"/flows_bak/_design/flows/_view/flow",
             data: {"keys": '[\"' + switch_flows.join('\",\"') + '\"]'},
             dataType: 'json',
             success: function (resp_data) {
